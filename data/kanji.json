@@ -1,0 +1,142 @@
+{
+    "kanji": [
+        {
+            "id": 1,
+            "englishWord": "person",
+            "kanji": "人",
+            "onyomi": ["ニン", "ジン"],
+            "kunyomi": ["ひと"],
+            "strokes": 2,
+            "compoundWordExamples": [
+                {
+                    "word": "白人",
+                    "meaning": "caucasian",
+                    "pronunciation": "はくじん"
+                },
+                {
+                    "word": "日本人",
+                    "meaning": "Japanese person",
+                    "pronunciation": "にほんじん"
+                }
+            ],
+            "level" : 5
+        },
+        {
+            "id": 2,
+            "englishWord": "to eat",
+            "kanji": "食",
+            "onyomi": ["ショク"],
+            "kunyomi": ["（た）べる", "（く）う"],
+            "strokes": 9,
+            "compoundWordExamples": [
+                {
+                    "word": "食事",
+                    "meaning": "meal",
+                    "pronunciation": "しょくじ"
+                },
+                {
+                    "word": "食べ物",
+                    "meaning": "food",
+                    "pronunciation": "たべもの"
+                }
+            ],
+            "level" : 5
+        },
+        {
+            "id": 3,
+            "englishWord": "to eat",
+            "kanji": "飲",
+            "onyomi": ["イン"],
+            "kunyomi": ["（の）む"],
+            "strokes": 9,
+            "compoundWordExamples": [
+                {
+                    "word": "飲み物",
+                    "meaning": "Drink",
+                    "pronunciation": "のみもの"
+                }
+            ],
+            "level" : 5
+        },
+        {
+            "id": 3,
+            "englishWord": "white",
+            "kanji": "白",
+            "onyomi": ["ハク"],
+            "kunyomi": ["（しろ）い"],
+            "strokes": 5,
+            "compoundWordExamples": [
+                {
+                    "word": "白髪",
+                    "meaning": "white hair",
+                    "pronunciation": "しらが"
+                }
+            ],
+            "level" : 5
+        },
+        {
+            "id": 3,
+            "englishWord": "time, hour",
+            "kanji": "時",
+            "onyomi": ["ジ"],
+            "kunyomi": ["とき"],
+            "strokes": 5,
+            "compoundWordExamples": [
+                {
+                    "word": "時間",
+                    "meaning": "hour / hours",
+                    "pronunciation": "じかん"
+                }
+            ],
+            "level" : 5
+        },
+        {
+            "id": 3,
+            "englishWord": "write",
+            "kanji": "書",
+            "onyomi": ["ショ"],
+            "kunyomi": ["（か）く"],
+            "strokes": 5,
+            "compoundWordExamples": [
+                {
+                    "word": "下書き",
+                    "meaning": "draft",
+                    "pronunciation": "したがき"
+                }
+            ],
+            "level" : 5
+        },
+        {
+            "id": 3,
+            "englishWord": "to speak, a tale",
+            "kanji": "話",
+            "onyomi": ["ワ"],
+            "kunyomi": ["（はな）す", "はなし"],
+            "strokes": 5,
+            "compoundWordExamples": [
+                {
+                    "word": "会話",
+                    "meaning": "conversation",
+                    "pronunciation": "かいわ"
+                }
+            ],
+            "level" : 5
+        },
+        {
+            "id": 3,
+            "englishWord": "gold",
+            "kanji": "金",
+            "onyomi": ["キン", "ゴン"],
+            "kunyomi": ["かね", "かなー"],
+            "strokes": 9,
+            "compoundWordExamples": [
+                {
+                    "word": "金髪",
+                    "meaning": "blonde hair",
+                    "pronunciation": "きんぱつ"
+                }
+            ],
+            "level" : 5
+        }
+    ]
+}

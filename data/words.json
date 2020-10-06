@@ -1,0 +1,22 @@
+{
+    "words": [
+        { 
+            "englishWord": "apple",
+            "type": "noun",
+            "japaneseWord": "ringo",
+            "kana": "りんご",
+            "kanji": "林檎",
+            "usedKanji": false,
+            "tags": ["fruit", "food"],
+            "level": 5
+        },
+        { 
+            "englishWord": "banana",
+            "type": "noun",
+            "japaneseWord": "banana",
+            "kana": "バナナ",
+            "tags": ["fruit", "food"],
+            "level": 5
+        }
+    ]
+}
