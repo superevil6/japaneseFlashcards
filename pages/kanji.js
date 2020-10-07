@@ -9,9 +9,10 @@ class kanji extends Component {
             studyData: [],
             onyomiAnswers: [],
             kunyomiAnswers: [],
-            meaningAnswer: [],
+            meaningAnswers: [],
             currentQuestionAnswers: [],
             showAnswer: false,
+            correctAnswers: 0,
             currentCard: 0,
             showExamples: false
         };
@@ -24,19 +25,178 @@ class kanji extends Component {
     }
     componentDidMount = () => {
         let onyomiAnswers = [];
+        let kunyomiAnswers = [];
+        let meaningAnswers = [];
         this.state.studyData.forEach((kanji)=>{
             kanji.onyomi.forEach((yomi)=>{
                 if(!onyomiAnswers.includes(yomi)){
                     onyomiAnswers.push(yomi);
                 }
             })
+            kanji.kunyomi.forEach((yomi)=>{
+                if(!kunyomiAnswers.includes(yomi)){
+                    kunyomiAnswers.push(yomi);
+                }
+            })
+            kanji.englishWord.forEach((word)=>{
+                if(!meaningAnswers.includes(word)){
+                    meaningAnswers.push(word);
+                }
+            })
         })
         this.setState({
-            onyomiAnswers: onyomiAnswers
+            onyomiAnswers: onyomiAnswers,
+            kunyomiAnswers: kunyomiAnswers,
+            meaningAnswers: meaningAnswers,
+            phase: "meaning"
+        });
+        console.log(this.state.phase);
+    }
+    
+    nextCard = () =>{
+        if(this.state.currentCard < this.state.studyData.length - 1){
+            this.setState({
+                showAnswer : false,
+                currentCard : this.state.currentCard += 1
+            })
+        } else {
+            this.setState({
+                showAnswer : false,
+                currentCard : 0
+            })
+        }
+    }
+
+    nextPhase = () =>{
+        let nextPhase;
+        let nextCard = this.state.currentCard;
+        switch(this.state.phase){
+            case "meaning":
+                nextPhase = "kunyomi";
+            break;
+            case "kunyomi":
+                nextPhase = "onyomi"
+            break;
+            case "onyomi":
+                nextPhase = "stroke";
+            break;
+            case "stroke":
+                nextPhase = "meaning";
+                nextCard = this.state.currentCard += 1;
+            break;
+        }
+        console.log("Crashes before");
+
+        this.setState({
+            currentQuestionAnswers: [],
+            phase: nextPhase,
+            correctAnswers: 0,
+            currentCard: nextCard
         })
     }
-    render() {    
 
+    generateOptions = (options, answers) =>{
+        if(options.length > 0){
+            console.log(options);
+            let randomizedQuestions = [];
+            //Add the correct answers
+            answers.forEach((answer)=>{
+                randomizedQuestions.push({
+                    option: answer,
+                    correct: true,
+                    clicked: false
+                });
+            })
+            for(let i = 0; i < options.length - answers.length;){
+                let randomIndex = Math.round(Math.random() * (options.length - 1));
+                console.log(randomIndex);
+                let optionAlreadyExists = false; 
+                randomizedQuestions.forEach((question)=>{
+                    if(question.option === options[randomIndex]){
+                        optionAlreadyExists = true;
+                    }
+                });
+                if(!optionAlreadyExists){
+                    console.log(options[randomIndex]);
+                    randomizedQuestions.push({ 
+                        option :options[randomIndex],
+                        correct: false,
+                        clicked: false
+                    });
+                    i++
+                }
+                else {
+                    continue;
+                }
+            }
+            //Shuffle the values so the answers aren't at the top.
+            for(let i = randomizedQuestions.length - 1; i > 0; i--){
+                let j = Math.floor(Math.random() * (i + 1));
+                let temp = randomizedQuestions[i];
+                randomizedQuestions[i] = randomizedQuestions[j];
+                randomizedQuestions[j] = temp;
+            }
+            this.setState({
+                currentQuestionAnswers : randomizedQuestions
+            });
+        }
+    }
+
+    showAnswers = (listAnswers, kanjiAnswers) =>{
+        if(this.state.currentQuestionAnswers.length === 0){
+            this.generateOptions(listAnswers, kanjiAnswers);
+        }
+        return this.state.currentQuestionAnswers.map((answer, index)=>{
+            if(answer){
+                return (
+                    <TouchableOpacity key={index} 
+                    style={[styles.option, answer.clicked ? 
+                    answer.correct ? styles.optionCorrect : styles.optionIncorrect 
+                    : styles.optionUnclicked]}
+                    onPress={() => this.chooseAnswer(answer, kanjiAnswers)}>
+                        <Text>
+                            {answer.option}
+                        </Text>
+                    </TouchableOpacity>
+                )
+            }
+        })
+    }
+
+    chooseAnswer = (answer, listOfAnswers) =>{
+        answer.clicked = true;
+        this.setState({currentQuestionAnswers : this.state.currentQuestionAnswers})
+
+        if(listOfAnswers.includes(answer.option)){
+            this.nextPhase();
+        } else {
+            console.log(this.state)
+
+            return false;
+        }
+    }
+    render() {
+        let currentView = <View><Text>Loading</Text></View>;
+        console.log(this.state.phase);
+        if(this.state.phase && this.state.currentCard){
+            switch(this.state.phase){
+                case "meaning":
+                    currentView = <View style={styles.optionContainer}>{this.showAnswers(this.state.meaningAnswers, this.state.studyData[this.state.currentCard].englishWord)}</View>
+                break;
+                case "kunyomi":
+                    currentView = <View style={styles.optionContainer}>{this.showAnswers(this.state.kunyomiAnswers, this.state.studyData[this.state.currentCard].kunyomi)}</View>
+
+                break;
+                case "onyomi":
+                    currentView = <View style={styles.optionContainer}>{this.showAnswers(this.state.onyomiAnswers, this.state.studyData[this.state.currentCard].onyomi)}</View>
+                break;
+                case "stroke":
+                    currentView = <View style={styles.optionContainer}>{this.showAnswers(this.state.onyomiAnswers, this.state.studyData[this.state.currentCard].onyomi)}</View>
+                break;
+            }
+        }
+
+        //View methods
         const onyomi = () =>{
             return this.state.studyData[this.state.currentCard].onyomi.map((yomi, index)=>{
                 return(
@@ -65,102 +225,7 @@ class kanji extends Component {
                     <Text>{example.pronunciation}</Text>
                 </View>
             })
-        }
-
-        const showExamples = () =>{
-            this.setState({showExamples : !this.state.showExamples});
-        }
-
-        const nextCard = () =>{
-            if(this.state.currentCard < this.state.studyData.length - 1){
-                this.setState({
-                    showAnswer : false,
-                    currentCard : this.state.currentCard += 1
-                })
-            } else {
-                this.setState({
-                    showAnswer : false,
-                    currentCard : 0
-                })
-            }
-        }
-
-        const generateOptions = (options, answers) =>{
-            if(options.length > 0){
-                console.log(options);
-                let randomizedQuestions = [];
-                //Add the correct answers
-                answers.forEach((answer)=>{
-                    randomizedQuestions.push({
-                        option: answer,
-                        correct: true,
-                        clicked: false
-                    });
-                })
-                for(let i = 0; i < options.length - answers.length;){
-                    console.log("Going")
-                    let randomIndex = Math.round(Math.random() * options.length);
-                    if(!randomizedQuestions.includes(options[randomIndex])){
-                        console.log(options[randomIndex]);
-                        randomizedQuestions.push({ 
-                            option :options[randomIndex],
-                            correct: false,
-                            clicked: false
-                        });
-                        i++
-                    } else {
-                        continue;
-                    }
-                }
-                //Shuffle the values so the answers aren't at the top.
-                for(let i = randomizedQuestions.length - 1; i > 0; i--){
-                    let j = Math.floor(Math.random() * (i + 1));
-                    let temp = randomizedQuestions[i];
-                    randomizedQuestions[i] = randomizedQuestions[j];
-                    randomizedQuestions[j] = temp;
-                }
-                this.setState({
-                    currentQuestionAnswers : randomizedQuestions
-                });
-            }
-        }
-
-        const showAnswers = () =>{
-            if(this.state.currentQuestionAnswers.length === 0){
-                generateOptions(this.state.onyomiAnswers, this.state.studyData[this.state.currentCard].onyomi);
-            }
-            return this.state.currentQuestionAnswers.map((answer, index)=>{
-                if(answer){
-                    return (
-                        <TouchableOpacity key={index} 
-                        style={answer.clicked ? 
-                        answer.correct ? styles.optionCorrect : styles.optionIncorrect 
-                        : styles.option}
-                        onPress={() => chooseAnswer(answer, this.state.studyData[this.state.currentCard].onyomi)}>
-                            <Text>
-                                {answer.option}
-                            </Text>
-                        </TouchableOpacity>
-                    )
-                }
-            })
-        }
-
-        const chooseAnswer = (answer, listOfAnswers) =>{
-            answer.clicked = true;
-            this.setState({currentQuestionAnswers : this.state.currentQuestionAnswers})
-
-            if(listOfAnswers.includes(answer.option)){
-                // this.setState({
-                //     correctAnswers : this.state.correctAnswers ++
-                // })
-            } else {
-                answer.clicked = true;
-                return false;
-            }
-        }
-        //styles
-
+        }        
 
         //render
         return (
@@ -169,14 +234,11 @@ class kanji extends Component {
                 <View 
                 style={styles.card}
                 >
-                    {!this.state.showAnswer &&
-                        <View>
-                            <Text>{this.state.studyData[this.state.currentCard].kanji}</Text>
-                            {/* {generateOptions(this.state.onyomiAnswers, this.state.studyData[this.state.currentCard].onyomi)} */}
-                            {showAnswers()}
-                        </View>
-                    }
-                    {this.state.showAnswer &&
+                    <View>
+                        <Text>{this.state.studyData[this.state.currentCard].kanji}</Text>
+                        {currentView}
+                    </View>
+                    {/* {this.state.showAnswer &&
                         <View>
                             <Text>{this.state.studyData[this.state.currentCard].englishWord}</Text>
                             <Text>{this.state.studyData[this.state.currentCard].kanji}</Text>
@@ -189,7 +251,7 @@ class kanji extends Component {
                             <Button
                             title='Show Examples' 
                             onPress={
-                            showExamples
+                            this.showExamples
                             } />
                             {this.state.showExamples &&
                                 <View>
@@ -197,12 +259,12 @@ class kanji extends Component {
                                 </View>
                             }
                         </View>
-                    }
+                    } */}
                 </View>
             }
             <Button
             title='next'
-            onPress={nextCard} 
+            onPress={this.nextCard} 
             />
         </View>
         );

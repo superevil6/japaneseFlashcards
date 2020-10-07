@@ -23,19 +23,29 @@ export default StyleSheet.create({
     flipButton: {
         width: '100%'
     },
+    optionContainer: {
+        flex: 1,
+        flexDirection: "row",
+        flexWrap: "wrap"
+    },
     option: {
-        backgroundColor: "white",
+        flex: 1,
+        width: "50%",
+        flexGrow: "1",
+        justifyContent: "center",
+        alignItems: "center",
+        padding: '10px',
+        margin: '10px',
         borderWidth: '1px',
         borderColor: "#000"
+    },
+    optionUnclicked: {
+        backgroundColor: "white",
     },
     optionCorrect: {
-        backgroundColor: "green",
-        borderWidth: '1px',
-        borderColor: "#000"
+        backgroundColor: "green"
     },
     optionIncorrect: {
-        backgroundColor: "red",
-        borderWidth: '1px',
-        borderColor: "#000"
+        backgroundColor: "red"
     }
 });

@@ -2,7 +2,7 @@
     "kanji": [
         {
             "id": 1,
-            "englishWord": "person",
+            "englishWord": ["person"],
             "kanji": "人",
             "onyomi": ["ニン", "ジン"],
             "kunyomi": ["ひと"],
@@ -23,7 +23,7 @@
         },
         {
             "id": 2,
-            "englishWord": "to eat",
+            "englishWord": ["to eat"],
             "kanji": "食",
             "onyomi": ["ショク"],
             "kunyomi": ["（た）べる", "（く）う"],
@@ -44,7 +44,7 @@
         },
         {
             "id": 3,
-            "englishWord": "to eat",
+            "englishWord": ["to drink"],
             "kanji": "飲",
             "onyomi": ["イン"],
             "kunyomi": ["（の）む"],
@@ -60,7 +60,7 @@
         },
         {
             "id": 3,
-            "englishWord": "white",
+            "englishWord": ["white"],
             "kanji": "白",
             "onyomi": ["ハク"],
             "kunyomi": ["（しろ）い"],
@@ -76,7 +76,7 @@
         },
         {
             "id": 3,
-            "englishWord": "time, hour",
+            "englishWord": ["time", "hour"],
             "kanji": "時",
             "onyomi": ["ジ"],
             "kunyomi": ["とき"],
@@ -92,7 +92,7 @@
         },
         {
             "id": 3,
-            "englishWord": "write",
+            "englishWord": ["write"],
             "kanji": "書",
             "onyomi": ["ショ"],
             "kunyomi": ["（か）く"],
@@ -108,7 +108,7 @@
         },
         {
             "id": 3,
-            "englishWord": "to speak, a tale",
+            "englishWord": ["to speak", "a tale"],
             "kanji": "話",
             "onyomi": ["ワ"],
             "kunyomi": ["（はな）す", "はなし"],
@@ -124,7 +124,7 @@
         },
         {
             "id": 3,
-            "englishWord": "gold",
+            "englishWord": ["gold"],
             "kanji": "金",
             "onyomi": ["キン", "ゴン"],
             "kunyomi": ["かね", "かなー"],
