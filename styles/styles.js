@@ -26,12 +26,13 @@ export default StyleSheet.create({
     optionContainer: {
         flex: 1,
         flexDirection: "row",
-        flexWrap: "wrap"
+        justifyContent: "center",
+        alignItems: "center",
+        flexWrap: "wrap",
+        width: "100%"
     },
     option: {
-        flex: 1,
-        width: "50%",
-        flexGrow: "1",
+        width: "35%",
         justifyContent: "center",
         alignItems: "center",
         padding: '10px',

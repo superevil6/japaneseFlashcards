@@ -2,7 +2,7 @@
     "kanji": [
         {
             "id": 1,
-            "englishWord": ["person"],
+            "englishWords": ["person"],
             "kanji": "人",
             "onyomi": ["ニン", "ジン"],
             "kunyomi": ["ひと"],
@@ -23,7 +23,7 @@
         },
         {
             "id": 2,
-            "englishWord": ["to eat"],
+            "englishWords": ["to eat"],
             "kanji": "食",
             "onyomi": ["ショク"],
             "kunyomi": ["（た）べる", "（く）う"],
@@ -44,7 +44,7 @@
         },
         {
             "id": 3,
-            "englishWord": ["to drink"],
+            "englishWords": ["to drink"],
             "kanji": "飲",
             "onyomi": ["イン"],
             "kunyomi": ["（の）む"],
@@ -59,8 +59,8 @@
             "level" : 5
         },
         {
-            "id": 3,
-            "englishWord": ["white"],
+            "id": 4,
+            "englishWords": ["white"],
             "kanji": "白",
             "onyomi": ["ハク"],
             "kunyomi": ["（しろ）い"],
@@ -75,8 +75,8 @@
             "level" : 5
         },
         {
-            "id": 3,
-            "englishWord": ["time", "hour"],
+            "id": 5,
+            "englishWords": ["time", "hour"],
             "kanji": "時",
             "onyomi": ["ジ"],
             "kunyomi": ["とき"],
@@ -91,8 +91,8 @@
             "level" : 5
         },
         {
-            "id": 3,
-            "englishWord": ["write"],
+            "id": 6,
+            "englishWords": ["write"],
             "kanji": "書",
             "onyomi": ["ショ"],
             "kunyomi": ["（か）く"],
@@ -107,8 +107,8 @@
             "level" : 5
         },
         {
-            "id": 3,
-            "englishWord": ["to speak", "a tale"],
+            "id": 7,
+            "englishWords": ["to speak", "a tale"],
             "kanji": "話",
             "onyomi": ["ワ"],
             "kunyomi": ["（はな）す", "はなし"],
@@ -123,8 +123,8 @@
             "level" : 5
         },
         {
-            "id": 3,
-            "englishWord": ["gold"],
+            "id": 8,
+            "englishWords": ["gold"],
             "kanji": "金",
             "onyomi": ["キン", "ゴン"],
             "kunyomi": ["かね", "かなー"],
