@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import { Button, View, SafeAreaView, Text, Alert, TouchableOpacity, TouchableHighlight } from 'react-native';
 import styles from '../styles/styles';
+import AsyncStorage from '@react-native-community/async-storage';
+
 //Kanji Query:
 //SELECT `id`, `Kanji`, `Strokes`, `JLPT-test`, `Reading within Joyo`, `Translation of Kun`, `Translation of on` FROM KanjiTable ORDER BY `Kanji Frequency without Proper Nouns` DESC
 
@@ -20,13 +22,14 @@ class kanji extends Component {
             currentCard: 0,
             showExamples: false,
             quizFinished: false,
+            failed: false
 
         };
       }
     componentWillMount = () =>{
         //This will be passed in as a prop later.
-        const kanjiData = require('../data/kanji.json');
-        this.setState({studyData : kanjiData.kanji})
+        console.log(this.props.route.params.kanji)
+        this.setState({studyData : this.props.route.params.kanji})
 
     }
     componentDidMount = () => {
@@ -79,6 +82,34 @@ class kanji extends Component {
             })
         }
     }
+
+    saveKanjiProgress = async (kanji) =>{
+        console.log("saving kanji");
+        let kanjiString = "@kanji_"+kanji.id;
+        let progress;
+        if(this.state.failed === false && kanji.progress && kanji.progress <= 4){
+            console.log("already progress, adding more")
+            progress = kanji.progress;
+            progress++;
+        } else if (this.state.failed === false && !kanji.progress){
+            console.log("no progress")
+            progress = 1;
+        }
+        else if (this.state.failed){
+            console.log("failed")
+            progress = 0;
+        }
+        try {
+            console.log(kanjiString + progress);
+            let progressString = JSON.stringify({"progress": progress});
+            console.log(progressString);
+            await AsyncStorage.setItem(kanjiString, progressString)
+          } catch(e) {
+              throw(e);
+            // save error
+          }
+    }
+
     nextPhase = () =>{
         let nextPhase;
         let nextCard = this.state.currentCard;
@@ -108,28 +139,31 @@ class kanji extends Component {
                     } else {
                         nextPhase = "meaning";
                         nextCard += 1;
+                        //save progress
+                        this.saveKanjiProgress(this.state.studyData[this.state.currentCard]);
                     }              
                 break;
                 case "stroke":
                     nextPhase = "meaning";
                     nextCard += 1;
+                    this.saveKanjiProgress(this.state.studyData[this.state.currentCard]);
+                    //save progress
                 break;
             }
-            console.log(nextCard)
             this.setState({
                 currentQuestionAnswers: [],
                 phase: nextPhase,
                 correctAnswers: 0,
                 totalCorrectAnswers: 0,
                 currentCard: nextCard,
-                clickDisabled: false
+                clickDisabled: false,
+                failed: false
             })
         } else {
             this.setState({
                 quizFinished : true
             })
         }
-
     }
 
     generateOptions = (options, answers) =>{
@@ -227,7 +261,10 @@ class kanji extends Component {
                 setTimeout(this.nextPhase, 2500)
             }
         } else {
-            this.setState({clickDisabled : true});
+            this.setState({
+                clickDisabled : true,
+                failed: true
+            });
             this.showAllAnswers();
             setTimeout(this.nextPhase, 2500);
         }

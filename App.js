@@ -6,6 +6,7 @@ import * as React from 'react';
 import { StyleSheet, Button, View, SafeAreaView, Text, Alert } from 'react-native';
 import Home from './pages/home';
 import Kanji from './pages/kanji';
+import KanjiList from './pages/kanjiLists';
 import Vocab from './pages/vocab';
 import Grammar from './pages/grammar';
 
@@ -17,6 +18,11 @@ export default function App() {
           name="Home"
           component={Home}
           options={{ title: 'Welcome' }}
+        />
+        <Stack.Screen
+          name="KanjiList"
+          component={KanjiList}
+          options={{ title: 'Kanji' }}
         />
         <Stack.Screen
           name="Kanji"
